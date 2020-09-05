@@ -1,0 +1,14 @@
+{
+  "name": "reward-caller",
+  "version": "0.1.0",
+  "description": "Rewards the caller of a function",
+  "scripts": {
+    "test": "truffle test"
+  },
+  "author": "Thomas Hodges (thomas@smartcontract.com)",
+  "license": "MIT",
+  "dependencies": {
+    "@openzeppelin/contracts": "^3.1.0",
+    "@openzeppelin/test-helpers": "^0.5.6"
+  }
+}
