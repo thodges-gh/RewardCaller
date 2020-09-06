@@ -3,6 +3,7 @@ pragma solidity 0.6.12;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
+import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
 /**
  * @title RewardCaller
@@ -11,6 +12,7 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
  */
 contract RewardCaller is Ownable {
   using SafeMath for uint256;
+  using SafeERC20 for IERC20;
   IERC20 public immutable rewardToken;
   uint256 public constant DETAILS_LOCK_PERIOD = 30 days;
   uint256 public rewardAmount;
@@ -57,7 +59,7 @@ contract RewardCaller is Ownable {
     lastCalled = block.timestamp;
     ( bool success, ) = transaction.target.call(transaction.data);
     require(success, "!success");
-    assert(rewardToken.transfer(msg.sender, rewardAmount));
+    rewardToken.safeTransfer(msg.sender, rewardAmount);
     return success;
   }
 
@@ -111,6 +113,6 @@ contract RewardCaller is Ownable {
     public
     onlyOwner()
   {
-    assert(rewardToken.transfer(_recipient, _amount));
+    rewardToken.safeTransfer(_recipient, _amount);
   }
 }
